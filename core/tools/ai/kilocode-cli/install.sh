@@ -27,8 +27,15 @@ _kilocode_proot_ubuntu() {
 }
 
 _get_latest_kilocode_version() {
-  curl -fsSL https://api.github.com/repos/Kilo-Org/kilocode/releases/latest |
-    grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
+  local version
+  version=$(curl -fsSL https://github.com/Kilo-Org/kilocode/releases 2>/dev/null |
+    grep -o '/releases/tag/v[0-9][^"]*' | head -n 1 | cut -d/ -f4)
+  
+  if [ -z "$version" ]; then
+    version=$(curl -fsSL https://api.github.com/repos/Kilo-Org/kilocode/releases 2>/dev/null |
+      grep '"tag_name":' | grep -v 'jetbrains' | head -n 1 | sed -E 's/.*"([^"]+)".*/\1/')
+  fi
+  echo "$version"
 }
 
 _kilocode_install_deps_native() {
@@ -141,11 +148,14 @@ _install_kilocode_native() {
   _download_kilocode_binary || return 1
   _compile_kilocode_helper || return 1
   log_success "Kilo Code CLI installed natively"
+  log_info "To run Kilo Code CLI, use command: ${D_CYAN}kilo${NC} (or ${D_CYAN}kilocode${NC})"
   return 0
 }
 
 _install_kilocode_proot() {
-  loading "Installing Kilo Code CLI (proot-distro)" _install_kilocode_proot_impl
+  loading "Installing Kilo Code CLI (proot-distro)" _install_kilocode_proot_impl || return 1
+  log_info "To run Kilo Code CLI, use command: ${D_CYAN}kilo${NC} (or ${D_CYAN}kilocode${NC})"
+  return 0
 }
 
 _install_kilocode_proot_impl() {

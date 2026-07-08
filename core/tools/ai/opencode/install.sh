@@ -27,14 +27,19 @@ _opencode_proot_ubuntu() {
 }
 
 _get_latest_opencode_version() {
-  local api_args=()
-
-  if [ -n "${GITHUB_TOKEN:-}" ]; then
-    api_args=(-H "Authorization: Bearer $GITHUB_TOKEN")
+  local version
+  version=$(curl -fsSL https://github.com/anomalyco/opencode/releases 2>/dev/null |
+    grep -o '/releases/tag/v[0-9][^"]*' | head -n 1 | cut -d/ -f4)
+  
+  if [ -z "$version" ]; then
+    local api_args=()
+    if [ -n "${GITHUB_TOKEN:-}" ]; then
+      api_args=(-H "Authorization: Bearer $GITHUB_TOKEN")
+    fi
+    version=$(curl -fsSL "${api_args[@]}" https://api.github.com/repos/anomalyco/opencode/releases/latest 2>/dev/null |
+      grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
   fi
-
-  curl -fsSL "${api_args[@]}" https://api.github.com/repos/anomalyco/opencode/releases/latest 2>/dev/null |
-    grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
+  echo "$version"
 }
 
 _opencode_install_deps_native() {
@@ -147,11 +152,14 @@ _install_opencode_native() {
   _download_opencode_binary || return 1
   _compile_opencode_helper || return 1
   log_success "OpenCode installed natively"
+  log_info "To run OpenCode, use command: ${D_CYAN}opencode${NC}"
   return 0
 }
 
 _install_opencode_proot() {
-  loading "Installing OpenCode (proot-distro)" _install_opencode_proot_impl
+  loading "Installing OpenCode (proot-distro)" _install_opencode_proot_impl || return 1
+  log_info "To run OpenCode, use command: ${D_CYAN}opencode${NC}"
+  return 0
 }
 
 _install_opencode_proot_impl() {

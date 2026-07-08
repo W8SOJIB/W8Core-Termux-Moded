@@ -27,8 +27,15 @@ _claude_proot_ubuntu() {
 }
 
 _get_latest_claude_version() {
-  curl -fsSL https://api.github.com/repos/anthropics/claude-code/releases/latest |
-    grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/'
+  local version
+  version=$(curl -fsSL https://github.com/anthropics/claude-code/releases 2>/dev/null |
+    grep -o '/releases/tag/v[0-9][^"]*' | head -n 1 | cut -d/ -f4)
+  
+  if [ -z "$version" ]; then
+    version=$(curl -fsSL https://api.github.com/repos/anthropics/claude-code/releases/latest 2>/dev/null |
+      grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  fi
+  echo "$version"
 }
 
 _claude_install_deps_native() {
@@ -134,11 +141,14 @@ _install_claude_native() {
   _download_claude_binary || return 1
   _compile_claude_helper || return 1
   log_success "Claude Code installed natively"
+  log_info "To run Claude Code, use command: ${D_CYAN}claude${NC}"
   return 0
 }
 
 _install_claude_proot() {
-  loading "Installing Claude Code (proot-distro)" _install_claude_proot_impl
+  loading "Installing Claude Code (proot-distro)" _install_claude_proot_impl || return 1
+  log_info "To run Claude Code, use command: ${D_CYAN}claude${NC}"
+  return 0
 }
 
 _install_claude_proot_impl() {
