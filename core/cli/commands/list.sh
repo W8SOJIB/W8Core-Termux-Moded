@@ -124,7 +124,7 @@ _list_ai() {
 
   echo
   log_info "Install specific: ${D_CYAN}core install ai --opencode --claude-code --kilocode-cli${NC}"
-  log_info "Install all: ${D_CYAN}core install ai${NC}"
+  log_info "Choose one: ${D_CYAN}core install ai${NC}"
   echo
 }
 

@@ -27,6 +27,7 @@ install_main() {
     echo
     log_info "Install specific tools with flags:"
     echo
+    list_item "core install ai"
     list_item "core install ai --opencode --claude-code --kilocode-cli"
     list_item "core install db --postgresql --sqlite"
     list_item "core install dev --gh --fzf --jq"

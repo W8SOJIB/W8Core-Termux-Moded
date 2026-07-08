@@ -11,24 +11,47 @@ install_ai() {
   separator
   echo
 
-  log_info "Installing AI tools..."
+  log_info "Select AI tool to install:"
   echo
-  log_info "☕ Grab a coffee! This process typically takes 1h-2h hours."
-  log_info "   Don't worry, it's normal for this to take a while..."
-  echo
-
   mkdir -p "$(dirname "$LOG_FILE")"
 
-  _install_ai_tools_wrapper
-  log_success "AI tools installed successfully"
+  read_select "AI tool" SELECTED_AI_TOOL \
+    "OpenCode (recommended)" \
+    "Claude Code" \
+    "Kilo Code CLI"
+
+  local install_rc=0
+
+  case "$SELECTED_AI_TOOL" in
+  *OpenCode*)
+    _install_selected_ai_tool "opencode"
+    install_rc=$?
+    ;;
+  *Claude*)
+    _install_selected_ai_tool "claude-code"
+    install_rc=$?
+    ;;
+  *Kilo*)
+    _install_selected_ai_tool "kilocode-cli"
+    install_rc=$?
+    ;;
+  esac
+
   separator
   echo
-  list_item "Claude Code ${GRAY}(${D_GREEN}claude${GRAY})"
-  list_item "OpenCode ${GRAY}(${D_GREEN}opencode${GRAY})"
-  list_item "Kilo Code CLI ${GRAY}(${D_GREEN}kilo${GRAY})"
-  echo
+  if [[ $install_rc -eq 0 ]]; then
+    log_success "$SELECTED_AI_TOOL installed successfully"
+  else
+    log_error "$SELECTED_AI_TOOL failed to install"
+  fi
+
+  return $install_rc
 }
 
+_install_selected_ai_tool() {
+  import "@/tools/ai/all"
+  _install_ai_tool "$1"
+}
 _install_ai_tools_wrapper() {
   import "@/tools/ai/all"
   install_all_ai_tools

@@ -104,10 +104,10 @@ These modules are available across most commands (`core list`, `core install`, `
 
 ## AI Agents
 
-The `ai` module installs the recommended AI-powered coding agents. Install all agents or pick specific ones with `--flag`:
+The `ai` module installs recommended AI-powered coding agents. Run the module installer to choose one from a selector, or use flags to install specific tools:
 
 ```bash
-core install ai                    # Install all recommended agents
+core install ai                    # Choose an AI tool to install
 core install ai --opencode --claude-code --kilocode-cli
 ```
 
@@ -356,7 +356,7 @@ All modules from [Common Modules](#common-modules) are valid targets.
 **Install entire module:**
 
 ```bash
-core install ai               # Install all AI tools
+core install ai               # Choose an AI tool to install
 core install db               # Install all databases
 core install dev              # Install all development tools
 ```
@@ -1118,7 +1118,7 @@ core pg stop              # Stop
 
 ```bash
 core update shell         # ZSH plugins only
-core update ai --qwen     # Specific AI tool only
+core update ai --opencode # Specific AI tool only
 ```
 
 ### Uninstall
