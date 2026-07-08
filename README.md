@@ -53,7 +53,7 @@
 ## Quick Installation
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/W8SOJIB/W8Core-Termux-Moded/main/install.sh | bash
+curl -fsSL "https://raw.githubusercontent.com/W8SOJIB/W8Core-Termux-Moded/main/install.sh?$(date +%s)" | bash
 ```
 
 Then run:
