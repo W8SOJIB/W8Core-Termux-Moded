@@ -51,6 +51,13 @@ install_ai() {
 _install_selected_ai_tool() {
   import "@/tools/ai/all"
   _install_ai_tool "$1"
+  local rc=$?
+
+  if [[ $rc -eq 2 ]]; then
+    return 0
+  fi
+
+  return $rc
 }
 _install_ai_tools_wrapper() {
   import "@/tools/ai/all"

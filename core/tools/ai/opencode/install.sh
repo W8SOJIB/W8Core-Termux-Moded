@@ -207,19 +207,24 @@ _install_opencode_proot_impl() {
 }
 
 install_opencode() {
-  if command -v opencode &>/dev/null; then
-    log_info "OpenCode is already installed"
-    return 2
+  if command -v opencode &>/dev/null || [ -d "$OPENCODE_DATA_DIR" ]; then
+    log_warn "Existing OpenCode install detected; reinstalling"
+    rm -f "$PREFIX/bin/opencode"
+    rm -rf "$OPENCODE_DATA_DIR"
   fi
 
   log_info "Select installation method for OpenCode:"
 
   read_select "Installation method" SELECTED_METHOD \
-    "Native (recommended) - Compile with glibc support"
+    "Native (recommended) - Compile with glibc support" \
+    "Proot-distro (alternative) - Ubuntu container"
 
   case "$SELECTED_METHOD" in
   *Native*)
     _install_opencode_native
+    ;;
+  *Proot-distro*)
+    _install_opencode_proot
     ;;
   esac
 }
