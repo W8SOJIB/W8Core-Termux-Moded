@@ -74,7 +74,7 @@ core
 | [`core install`](#core-install) | Install specific modules |
 | [`core show`](#core-show) | Show tool documentation |
 | [`core update`](#core-update) | Update modules or tools |
-| [`core uninstall`](#core-uninstall) | Remove installed modules |
+| [`core uninstall`](#core-uninstall) | Remove W8Core completely or uninstall modules |
 | [`core reinstall`](#core-reinstall) | Uninstall + reinstall modules |
 | [`core voice`](#core-voice) | Speech-to-agent via microphone |
 | [`core open`](#core-open) | Open documentation in browser |
@@ -403,16 +403,27 @@ core update dev --gh --fzf --jq             # Update only gh, fzf, and jq
 
 ### `core uninstall`
 
-Remove installed modules or specific tools.
+Remove W8Core-Termux-Moded completely, or remove specific modules/tools by passing a target.
 
 ```bash
-core uninstall                # Show help
+core uninstall                # Remove core command, repo, data, cache, config
+core unstall                  # Same as core uninstall
 core uninstall <target>       # Uninstall specific target
 core uninstall <target> --tool1 --tool2  # Uninstall specific tools
 core uninstall core           # Remove W8Core-Termux-Moded completely
 ```
 
-In addition to all [Common Modules](#common-modules), `core uninstall` supports per-module and per-tool removal. No "uninstall all" — desinstalá solo lo que necesitás.
+Full uninstall removes:
+
+```bash
+rm -f "$PREFIX/bin/core"
+rm -rf "$HOME/.local/share/core-termux"
+rm -rf "$HOME/.local/share/core-termux-data"
+rm -rf "$HOME/.cache/core-termux"
+rm -rf "$HOME/.config/core-termux"
+```
+
+In addition to all [Common Modules](#common-modules), `core uninstall <target>` supports per-module and per-tool removal.
 
 **Uninstall specific tools:**
 
@@ -420,9 +431,7 @@ In addition to all [Common Modules](#common-modules), `core uninstall` supports 
 core uninstall ai --opencode --claude-code --kilocode-cli
 core uninstall db --postgresql --sqlite       # Uninstall only PostgreSQL and SQLite
 core uninstall dev --gh --fzf                 # Uninstall only gh and fzf
-core uninstall core                           # Remove core command, repo, data, cache, config
 ```
-
 ---
 
 ### `core reinstall`
@@ -1115,6 +1124,7 @@ core update ai --qwen     # Specific AI tool only
 ### Uninstall
 
 ```bash
+core uninstall            # Remove W8Core-Termux-Moded completely
 core uninstall npm        # Remove Node.js modules
 core uninstall ai --opencode
 ```

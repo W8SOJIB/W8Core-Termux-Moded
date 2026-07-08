@@ -8,6 +8,10 @@ core_main() {
   local cmd="$1"
   shift || true
 
+  if [[ "$cmd" == "unstall" ]]; then
+    cmd="uninstall"
+  fi
+
   # si no se pasa comando
   if [[ -z "$cmd" ]]; then
     core_help
@@ -42,7 +46,7 @@ core_help() {
   printf "    ${D_CYAN}%-12s${NC} %s\n" "install" "Install modules and packages"
   printf "    ${D_CYAN}%-12s${NC} %s\n" "show" "Show tool documentation"
   printf "    ${D_CYAN}%-12s${NC} %s\n" "update" "Update modules or tools"
-  printf "    ${D_CYAN}%-12s${NC} %s\n" "uninstall" "Remove installed modules"
+  printf "    ${D_CYAN}%-12s${NC} %s\n" "uninstall" "Remove modules or W8Core completely"
   printf "    ${D_CYAN}%-12s${NC} %s\n" "reinstall" "Uninstall + install modules"
   printf "    ${D_CYAN}%-12s${NC} %s\n" "open" "Open documentation in browser"
   printf "    ${D_CYAN}%-12s${NC} %s\n" "list" "List available tools in modules"
@@ -62,7 +66,7 @@ core_help() {
   echo
   printf "    ${D_GREEN}%-10s${NC} %s\n" "lang" "Node, Python, Perl, PHP, Rust, C/C++, Go"
   printf "    ${D_GREEN}%-10s${NC} %s\n" "db" "PostgreSQL, MariaDB, SQLite, MongoDB"
-  printf "    ${D_GREEN}%-10s${NC} %s\n" "ai" "OpenCode, Gentle AI, Claude Code, etc."
+  printf "    ${D_GREEN}%-10s${NC} %s\n" "ai" "Claude Code, OpenCode, Kilo Code CLI"
   printf "    ${D_GREEN}%-10s${NC} %s\n" "editor" "Neovim + NvChad + Plugins"
   printf "    ${D_GREEN}%-10s${NC} %s\n" "dev" "GitHub CLI, wget, curl, fzf, etc."
   printf "    ${D_GREEN}%-10s${NC} %s\n" "npm" "Node.js global npm packages"

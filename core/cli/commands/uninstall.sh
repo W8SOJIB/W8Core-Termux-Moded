@@ -6,33 +6,7 @@ import "@/utils/colors"
 uninstall_main() {
 
   if [[ $# -eq 0 ]]; then
-    echo
-    box "Core Uninstall"
-    echo
-    log_info "Usage: core uninstall <target>"
-    log_info "Usage: core uninstall <target> --tool1 --tool2"
-    echo
-    log_info "Available targets:"
-    echo
-    list_item "core       - Remove W8Core-Termux-Moded completely"
-    list_item "lang       - Remove language packages"
-    list_item "db         - Remove databases"
-    list_item "ai         - Remove AI tools"
-    list_item "editor     - Remove code editor"
-    list_item "dev        - Remove development tools"
-    list_item "npm        - Remove Node.js global modules"
-    list_item "shell      - Remove ZSH + Oh My Zsh"
-    list_item "ui         - Restore Termux UI to default"
-    list_item "auto       - Remove automation tools"
-    echo
-    log_info "Uninstall specific tools with flags:"
-    echo
-    list_item "core uninstall ai --opencode --claude-code --kilocode-cli"
-    list_item "core uninstall db --postgresql --sqlite"
-    list_item "Run ${D_CYAN}core list <target>${NC} to see all available tools"
-    echo
-    log_warn "Warning: This will remove installed packages and configurations!"
-    echo
+    _uninstall_core_system
     return
   fi
 
