@@ -204,7 +204,9 @@ clone_repo() {
     log_ok "Using local repository"
   elif [[ -d "$CORE_DATA/.git" ]]; then
     progress_bar 3 10
-    git -C "$CORE_DATA" pull origin "$BRANCH" &>/dev/null
+    git -C "$CORE_DATA" remote set-url origin "$REPO" &>/dev/null
+    git -C "$CORE_DATA" fetch --depth=1 origin "$BRANCH" &>/dev/null
+    git -C "$CORE_DATA" reset --hard "origin/$BRANCH" &>/dev/null
     progress_bar 10 10
     echo
     log_ok "Repository updated"
