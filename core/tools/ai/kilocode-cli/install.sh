@@ -211,9 +211,10 @@ _install_kilocode_proot_impl() {
 }
 
 install_kilocode_cli() {
-  if command -v kilocode &>/dev/null; then
-    log_info "Kilo Code CLI is already installed"
-    return 2
+  if command -v kilocode &>/dev/null || [ -d "$KILOCODE_DATA_DIR" ]; then
+    log_warn "Existing Kilo Code CLI install detected; reinstalling"
+    rm -f "$PREFIX/bin/kilocode" "$PREFIX/bin/kilo"
+    rm -rf "$KILOCODE_DATA_DIR"
   fi
 
   log_info "Select installation method for Kilo Code CLI:"

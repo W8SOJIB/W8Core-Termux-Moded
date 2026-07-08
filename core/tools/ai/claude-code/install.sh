@@ -192,9 +192,10 @@ _install_claude_proot_impl() {
 }
 
 install_claude_code() {
-  if command -v claude &>/dev/null; then
-    log_info "Claude Code is already installed"
-    return 2
+  if command -v claude &>/dev/null || [ -d "$CLAUDE_DATA_DIR" ]; then
+    log_warn "Existing Claude Code install detected; reinstalling"
+    rm -f "$PREFIX/bin/claude"
+    rm -rf "$CLAUDE_DATA_DIR"
   fi
 
   log_info "Select installation method for Claude Code:"
