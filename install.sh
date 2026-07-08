@@ -235,6 +235,10 @@ clone_repo() {
 create_symlink() {
   log_step 4 "Creating core command"
 
+  chmod +x "$CORE_DATA/core/bin/core"
+  find "$CORE_DATA/core" -type f -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true
+  find "$CORE_DATA/core/tools" -type f -path "*/bin/*" -exec chmod +x {} \; 2>/dev/null || true
+
   rm -f "$PREFIX/bin/core"
   ln -sf "$CORE_DATA/core/bin/core" "$PREFIX/bin/core"
 
