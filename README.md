@@ -61,8 +61,16 @@ Then run:
 ```bash
 core
 ```
+## Setup Open Code API
+```
+chmod +x setup-opencode.sh
+```
+```
+./setup-opencode.sh
+```
 
----
+
+
 
 ## Main Commands
 
