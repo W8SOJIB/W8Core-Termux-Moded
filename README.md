@@ -409,6 +409,7 @@ Remove installed modules or specific tools.
 core uninstall                # Show help
 core uninstall <target>       # Uninstall specific target
 core uninstall <target> --tool1 --tool2  # Uninstall specific tools
+core uninstall core           # Remove W8Core-Termux-Moded completely
 ```
 
 In addition to all [Common Modules](#common-modules), `core uninstall` supports per-module and per-tool removal. No "uninstall all" — desinstalá solo lo que necesitás.
@@ -419,6 +420,7 @@ In addition to all [Common Modules](#common-modules), `core uninstall` supports 
 core uninstall ai --opencode --claude-code --kilocode-cli
 core uninstall db --postgresql --sqlite       # Uninstall only PostgreSQL and SQLite
 core uninstall dev --gh --fzf                 # Uninstall only gh and fzf
+core uninstall core                           # Remove core command, repo, data, cache, config
 ```
 
 ---

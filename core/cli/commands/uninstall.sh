@@ -14,6 +14,7 @@ uninstall_main() {
     echo
     log_info "Available targets:"
     echo
+    list_item "core       - Remove W8Core-Termux-Moded completely"
     list_item "lang       - Remove language packages"
     list_item "db         - Remove databases"
     list_item "ai         - Remove AI tools"
@@ -69,6 +70,9 @@ _uninstall_full_module() {
   local target="$1"
 
   case "$target" in
+  core)
+    _uninstall_core_system
+    ;;
   lang)
     import "@/modules/lang"
     uninstall_lang
@@ -110,6 +114,25 @@ _uninstall_full_module() {
     echo "Run 'core uninstall' to see available targets"
     ;;
   esac
+}
+
+_uninstall_core_system() {
+  separator
+  box "Uninstalling W8Core-Termux-Moded"
+  separator
+  echo
+
+  log_warn "Removing Core command, repository, data, cache, and config"
+  echo
+
+  rm -f "$PREFIX/bin/core"
+  rm -rf "$HOME/.local/share/core-termux"
+  rm -rf "$HOME/.local/share/core-termux-data"
+  rm -rf "$HOME/.cache/core-termux"
+  rm -rf "$HOME/.config/core-termux"
+
+  log_success "W8Core-Termux-Moded removed completely"
+  echo
 }
 
 # Uninstall specific tools within a module

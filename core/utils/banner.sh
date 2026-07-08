@@ -49,7 +49,8 @@ CORE_TIPS=(
 	"Reinstall from scratch: ${D_CYAN}core reinstall shell${NC}"
 	"Reinstall specific tools: ${D_CYAN}core reinstall ai --opencode --ollama${NC}"
 	"Remove a module: ${D_CYAN}core uninstall npm${NC}"
-	"Remove specific tool: ${D_CYAN}core uninstall ai --ollama${NC}"
+	"Remove W8Core-Termux-Moded completely: ${D_CYAN}core uninstall core${NC}"
+	"Remove specific tool: ${D_CYAN}core uninstall ai --opencode${NC}"
 	"Open tool docs in browser: ${D_CYAN}core open ai${NC}"
 
 	# ── Languages ────────────────────────────────────────────
